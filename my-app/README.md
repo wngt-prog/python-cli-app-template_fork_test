@@ -1,13 +1,13 @@
 # my-app
 
-A Python CLI application built with uv and Docker, based on the `python-docker-cli-app-template`.
+`python-docker-cli-app-template` をベースに、uvとDockerで構築されたPython CLIアプリケーションです。
 
-This project provides a simple "hello world" command line interface.
+このプロジェクトは、シンプルな "hello world" のコマンドラインインターフェースを提供します。
 
-## Usage
+## 使い方
 
-(To be defined)
+(今後記載予定)
 
-## Development
+## 開発への貢献
 
-(To be defined)
+開発の進め方や環境構築の手順については、[`CONTRIBUTING.md`](../docs/CONTRIBUTING.md) を参照してください。
