@@ -13,6 +13,10 @@ git switch -c feature/issue-1-project-setup origin/main
 git switch -c feature/issue-1-project-setup origin/main
 ```
 
+## 作業の実行単位
+
+タスクをひととおり終えて、`git add` もしくは `git commit` する段になったら作業を止めて、ユーザーに報告してください。
+
 ## 削除処理
 
 ディレクトリやファイルを削除する際は、Git 管理されているか確認してください。
