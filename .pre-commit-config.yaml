@@ -61,3 +61,10 @@ repos:
         additional_dependencies:
           - types-click
           - typer
+  - repo: local
+    hooks:
+      - id: prevent-push-to-main
+        name: Prevent push to main branch
+        entry: bash -c 'if [ "$PRE_COMMIT_REMOTE_BRANCH" = "main" ]; then echo "🚫 Push to main branch is not allowed!"; exit 1; fi'
+        language: system
+        stages: [pre-push]
