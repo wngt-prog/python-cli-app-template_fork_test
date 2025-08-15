@@ -45,3 +45,21 @@ docker compose run --rm app uv add pytest --group dev
 ```
 
 このコマンドを実行すると、`pyproject.toml`と`uv.lock`が自動的に更新されます。更新されたこれらのファイルは、必ずGitにコミットしてください。
+
+### 3. テストの実行
+
+コードの品質を保つため、変更を行った際は必ずテストを実行してください。
+
+```bash
+# すべてのテストを実行
+docker compose run --rm app pytest
+
+# 詳細な出力でテストを実行
+docker compose run --rm app pytest -v
+
+# 特定のテストファイルのみを実行
+docker compose run --rm app pytest tests/test_cli.py
+
+# 特定のテスト関数のみを実行
+docker compose run --rm app pytest tests/test_cli.py::test_hello_command
+```
