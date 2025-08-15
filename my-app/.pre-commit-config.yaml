@@ -36,17 +36,19 @@ repos:
       - id: detect-secrets
         args: ["--baseline", ".secrets.baseline"]
   - repo: https://github.com/fpgmaas/deptry
-    rev: 0.17.1
+    rev: 0.23.1
     hooks:
       - id: deptry
-  - repo: https://github.com/pycqa/safety
-    rev: 3.1.0
+  - repo: local
     hooks:
-      - id: safety
-        entry: safety check --stdin
+      - id: safety-check
+        name: safety-check
+        entry: bash -c 'uv pip compile pyproject.toml --output-file /tmp/requirements.txt && safety check --file /tmp/requirements.txt'
         language: python
-        additional_dependencies: ["uv"]
-        files: ^(pyproject\.toml|uv\.lock)$
+        additional_dependencies:
+          - safety
+          - uv
+        always_run: true
         pass_filenames: false
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.10.1
