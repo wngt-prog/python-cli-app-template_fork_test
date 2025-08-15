@@ -65,6 +65,6 @@ repos:
     hooks:
       - id: prevent-push-to-main
         name: Prevent push to main branch
-        entry: bash -c 'branch="$(git branch --show-current)"; if [ "$branch" = "main" ]; then echo "🚫 Push to main branch is not allowed!"; exit 1; fi'
+        entry: bash -c 'if [ "$PRE_COMMIT_REMOTE_BRANCH" = "main" ]; then echo "🚫 Push to main branch is not allowed!"; exit 1; fi'
         language: system
-        stages: [push]
+        stages: [pre-push]
