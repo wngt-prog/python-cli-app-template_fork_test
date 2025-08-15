@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: リポジトリをチェックアウト
+      uses: actions/checkout@v4
+      
+    - name: Docker Composeでリンティング実行
+      run: |
+        cd my-app
+        docker compose run --rm app ruff check .
+        
+    - name: Docker Composeでフォーマット確認
+      run: |
+        cd my-app
+        docker compose run --rm app ruff format --check .
+        
+    - name: Docker Composeでテスト実行
+      run: |
+        cd my-app
+        docker compose run --rm app pytest -v
+        
+    - name: Dockerイメージビルド確認
+      run: |
+        cd my-app
+        docker compose build

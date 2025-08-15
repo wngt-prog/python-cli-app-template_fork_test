@@ -71,3 +71,47 @@ docker compose run --rm app pytest tests/test_cli.py
 # 特定のテスト関数のみを実行
 docker compose run --rm app pytest tests/test_cli.py::test_hello_command
 ```
+
+### 4. コード品質チェック
+
+コードの品質を保つため、`ruff`によるリンティングとフォーマットチェックを実行してください。
+
+```bash
+# リンティング実行（エラーがあれば自動修正）
+docker compose run --rm app ruff check . --fix
+
+# フォーマットチェック
+docker compose run --rm app ruff format --check .
+
+# フォーマット適用
+docker compose run --rm app ruff format .
+```
+
+### 5. 継続的インテグレーション (CI)
+
+このプロジェクトでは、GitHub Actionsを使用してCI/CDパイプラインが設定されています。
+
+**自動実行されるチェック**:
+- プルリクエスト作成時とmainブランチへのプッシュ時に自動実行
+- `ruff`によるリンティングとフォーマットチェック
+- `pytest`によるテスト実行
+- Dockerイメージのビルド確認
+
+**ローカルでの事前チェック**:
+プルリクエストを作成する前に、ローカルで以下のコマンドを実行してCIが成功することを確認してください：
+
+```bash
+cd my-app
+
+# 1. リンティングチェック
+docker compose run --rm app ruff check . --fix
+
+# 2. フォーマットチェック
+docker compose run --rm app ruff format --check .
+
+# 3. テスト実行
+docker compose run --rm app pytest -v
+
+# 4. Dockerビルド確認
+docker compose build
+```
