@@ -14,6 +14,7 @@
 **GitHubのissueを始める時は、必ず最初に専用のブランチを作成すること！**
 
 ```bash
+git fetch
 # Issue番号に対応したブランチ名で作成
 # 例: Issue #1の場合
 git switch -c feature/issue-1-project-setup origin/main
