@@ -1,0 +1,27 @@
+name: "❓ 質問 (Question)"
+description: "プロジェクトに関する質問"
+title: "Q: "
+labels: ["question", "help wanted"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ご質問ありがとうございます。
+        質問する前に、既存のIssueやドキュメントをご確認ください。
+  - type: textarea
+    id: question
+    attributes:
+      label: "質問内容 (Your Question)"
+      description: "何を知りたいですか？ できるだけ具体的に記述してください。"
+    validations:
+      required: true
+  - type: textarea
+    id: what-you-tried
+    attributes:
+      label: "試したこと (What you've tried)"
+      description: "この問題を解決するために、ご自身で何を調査・試行しましたか？ 関連するドキュメントの箇所なども教えてください。"
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "追加情報 (Additional Context)"
+      description: "その他、質問に関する追加情報があれば記述してください。"

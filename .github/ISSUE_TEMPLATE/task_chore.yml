@@ -1,0 +1,28 @@
+name: "✅ タスク・雑務 (Task / Chore)"
+description: "機能追加やバグ修正以外の内部的なタスク"
+title: "CHORE: "
+labels: ["chore"]
+body:
+  - type: textarea
+    id: purpose
+    attributes:
+      label: "タスクの目的 (Purpose)"
+      description: "このタスクの目的や背景を説明してください。"
+    validations:
+      required: true
+  - type: textarea
+    id: dod
+    attributes:
+      label: "完了の定義 (Definition of Done)"
+      description: "何をもってこのタスクが完了したと見なすか、具体的な項目をリストアップしてください。"
+      placeholder: |
+        - [ ] 項目1
+        - [ ] 項目2
+        - [ ] 項目3
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "追加情報 (Additional Context)"
+      description: "関連するIssueやドキュメントへのリンクなど、追加情報があれば記述してください。"
