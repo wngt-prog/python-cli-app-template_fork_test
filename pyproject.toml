@@ -20,6 +20,9 @@ testpaths = ["tests"]
 [tool.bandit]
 exclude_dirs = ["tests"]
 
+[tool.mypy]
+exclude = "uv-docker-example-main"
+
 [tool.ruff]
 line-length = 88
 target-version = "py312"

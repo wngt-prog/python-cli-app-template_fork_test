@@ -2,9 +2,8 @@
 CLIアプリケーションのテスト
 """
 
-from typer.testing import CliRunner
-
 from my_app.cli import app
+from typer.testing import CliRunner
 
 runner = CliRunner()
 

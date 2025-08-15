@@ -90,7 +90,7 @@ jobs:
         with:
           name: uv-docker-example-standalone
           path: /tmp
-  
+
       - name: Load images
         run: |
           docker load --input /tmp/uv-docker-example.tar
