@@ -13,7 +13,21 @@
 
 まず、プロジェクトをローカルで開発できる状態に準備します。
 
-1.  **Gitフックのセットアップ**
+1.  **Dockerイメージのビルド**
+
+    開発用のDockerイメージをビルドします。
+    ```bash
+    docker compose build
+    ```
+
+2.  **開発依存関係の同期**
+
+    `pre-commit`などの開発ツールをインストールするため、開発用の依存関係を同期します。
+    ```bash
+    docker compose run --rm app uv sync --group dev
+    ```
+
+3.  **Gitフックのセットアップ**
 
     コミット前に品質チェックを自動化するため、**ホストマシン（お使いのPC）**で`pre-commit`フックをインストールします。
     ```bash
@@ -21,27 +35,19 @@
     pre-commit install
     ```
 
-2.  **Dockerイメージのビルド**
+4.  **すべての依存関係の同期**
 
-    開発用のDockerイメージをビルドします。
-    ```bash
-    docker compose build
-    ```
-
-3.  **依存関係の同期**
-
-    `uv.lock`ファイルに基づいて、コンテナ内に**完全に再現可能な**開発環境を構築します。このコマンドは、`pyproject.toml`で定義された全ての依存関係（開発用を含む）をインストールします。
+    `uv.lock`ファイルに基づいて、コンテナ内に**完全に再現可能な**開発環境を構築します。このコマンドは、`pyproject.toml`で定義された全ての依存関係（本番用・開発用）をインストールします。
     ```bash
     docker compose run --rm app uv sync
     ```
-    *注意: `app`は`compose.yml`で定義するサービス名です。これは後続のタスクで作成します。*
 
 ### 日々の開発ワークフロー: `watch`モードの活用
 
 初回セットアップ完了後の日常的な開発では、`docker compose watch`コマンドの使用を強く推奨します。これにより、開発サイクルが大幅に効率化されます。
 
 ```bash
-# プロジェクトのルートディレクトリ（my-app/）で実行
+# プロジェクトのルートディレクトリで実行
 docker compose watch
 ```
 
@@ -112,7 +118,7 @@ docker compose run --rm app ruff format .
 
 **自動実行されるチェック**:
 - プルリクエスト作成時とmainブランチへのプッシュ時に自動実行
-- `ruff`によるリンティングとフォーマットチェック
+- `pre-commit`による各種チェック (`ruff`, `deptry`, `mypy` など)
 - `pytest`によるテスト実行
 - Dockerイメージのビルド確認
 
@@ -120,17 +126,12 @@ docker compose run --rm app ruff format .
 プルリクエストを作成する前に、ローカルで以下のコマンドを実行してCIが成功することを確認してください：
 
 ```bash
-cd my-app
+# 1. pre-commitによる品質チェック
+pre-commit run --all-files
 
-# 1. リンティングチェック
-docker compose run --rm app ruff check . --fix
-
-# 2. フォーマットチェック
-docker compose run --rm app ruff format --check .
-
-# 3. テスト実行
+# 2. テスト実行
 docker compose run --rm app pytest -v
 
-# 4. Dockerビルド確認
+# 3. Dockerビルド確認
 docker compose build
 ```
