@@ -24,7 +24,7 @@ git switch -c feature/issue-1-project-setup origin/main
 
 ## 作業の実行単位
 
-タスクをひととおり終えて、`git add` もしくは `git commit` する段になったら作業を止めて、ユーザーに報告してください。
+タスクをひととおり終えて、`git add`, `git commit`, `git push`, `gh pr create` する段になったら作業を止めて、ユーザーに報告してください。
 
 ## 削除処理
 
