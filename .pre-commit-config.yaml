@@ -34,10 +34,14 @@ repos:
     rev: v1.5.0
     hooks:
       - id: detect-secrets
-  # - repo: https://github.com/fpgmaas/deptry
-  #   rev: 0.23.1
-  #   hooks:
-  #     - id: deptry
+  - repo: https://github.com/fpgmaas/deptry
+    rev: 0.23.1
+    hooks:
+      - id: deptry
+        language: python
+        entry: deptry
+        args: [--config, pyproject.toml, "src"]
+        types: [python]
   - repo: local
     hooks:
       - id: safety
@@ -48,11 +52,12 @@ repos:
         additional_dependencies: ["safety", "uv"]
         files: ^(pyproject\\.toml|uv\\.lock)$
         pass_filenames: false
-  # - repo: https://github.com/pre-commit/mirrors-mypy
-  #   rev: v1.10.1
-  #   hooks:
-  #     - id: mypy
-  #       args: [--config-file=pyproject.toml, --exclude, "uv-docker-example-main/"]
-  #       additional_dependencies:
-  #         - types-click
-  #         - typer
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.1
+    hooks:
+      - id: mypy
+        files: ^src/
+        args: [--config-file=pyproject.toml]
+        additional_dependencies:
+          - types-click
+          - typer

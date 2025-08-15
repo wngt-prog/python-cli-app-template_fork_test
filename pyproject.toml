@@ -21,7 +21,6 @@ testpaths = ["tests"]
 exclude_dirs = ["tests"]
 
 [tool.mypy]
-exclude = "uv-docker-example-main"
 
 [tool.ruff]
 line-length = 88
@@ -42,3 +41,8 @@ ignore = []
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
+
+[tool.deptry]
+exclude = ["uv-docker-example-main", "tests"]
+ignore_notebooks = true
+ignore = ["DEP002"]
