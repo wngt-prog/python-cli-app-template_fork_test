@@ -1,0 +1,35 @@
+name: "🛠️ 技術的な改善・リファクタリング (Technical Improvement / Refactoring)"
+description: "コード品質、パフォーマンス、保守性の向上に関する提案"
+title: "REFACTOR: "
+labels: ["refactoring", "tech-debt"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        コード改善のご提案ありがとうございます！
+  - type: textarea
+    id: target-code
+    attributes:
+      label: "改善したいコード/機能 (Target Code/Feature)"
+      description: "どの部分のコードを改善したいですか？ ファイル名や関数名などを具体的に記述してください。"
+    validations:
+      required: true
+  - type: textarea
+    id: current-problem
+    attributes:
+      label: "現状の問題点 (Current Problem)"
+      description: "なぜリファクタリングが必要だと考えますか？（例：複雑すぎる、パフォーマンスが悪い、テストが書きにくいなど）"
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-solution
+    attributes:
+      label: "提案する改善策 (Suggested Solution)"
+      description: "具体的にどのようにコードを改善したいか、コード例を交えて説明してください。"
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: "追加情報 (Additional Context)"
+      description: "その他、関連する情報があれば記述してください。"

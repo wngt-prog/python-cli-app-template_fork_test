@@ -1,0 +1,37 @@
+name: "📝 ドキュメント改善 (Documentation Improvement)"
+description: "ドキュメントの誤字脱字、不明瞭な点の修正提案"
+title: "DOCS: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ドキュメント改善のご提案ありがとうございます！
+  - type: dropdown
+    id: document-path
+    attributes:
+      label: 対象ドキュメント (Target Document)
+      description: "どのドキュメントに関する改善提案ですか？"
+      multiple: true
+      options:
+        - README.md
+        - docs/CONTRIBUTING.md
+        - .kiro/specs/python-cli-app/design.md
+        - その他(Other)
+    validations:
+      required: true
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: 問題点 (Problem Description)
+      description: "どのように情報が古い、間違っている、または不足していますか？ 具体的な箇所を引用していただけると助かります。"
+      placeholder: "例：README.mdの「クイックスタート」セクションの手順3が、現在のセットアップ手順と異なります。"
+    validations:
+      required: true
+  - type: textarea
+    id: suggested-fix
+    attributes:
+      label: 改善案 (Suggested Fix)
+      description: "どのように修正・改善すべきか、具体的な提案を記述してください。"
+    validations:
+      required: true
