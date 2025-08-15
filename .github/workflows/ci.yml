@@ -23,12 +23,11 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/pre-commit
-          key: pre-commit|${{ hashFiles('my-app/.pre-commit-config.yaml') }}
+          key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: pre-commitのインストールと実行
         run: |
           pip install pre-commit
-          cd my-app
           pre-commit run --all-files
 
   # --- ジョブ2: テスト実行 ---

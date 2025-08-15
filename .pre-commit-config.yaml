@@ -28,32 +28,29 @@ repos:
     rev: 1.7.9
     hooks:
       - id: bandit
-        args: ["-c", "pyproject.toml"]
+        args: ["-c", "my-app/pyproject.toml"]
         additional_dependencies: ["bandit[toml]"]
   - repo: https://github.com/Yelp/detect-secrets
     rev: v1.5.0
     hooks:
       - id: detect-secrets
-        args: ["--baseline", ".secrets.baseline"]
   - repo: https://github.com/fpgmaas/deptry
     rev: 0.23.1
     hooks:
       - id: deptry
   - repo: local
     hooks:
-      - id: safety-check
-        name: safety-check
-        entry: bash -c 'uv pip compile pyproject.toml --output-file /tmp/requirements.txt && safety check --file /tmp/requirements.txt'
+      - id: safety
+        name: Check for insecure dependencies
+        entry: bash -c "uv pip freeze | safety check --stdin"
         language: python
-        additional_dependencies:
-          - safety
-          - uv
-        always_run: true
-        pass_filenames: false
+        types: [python]
+        require_serial: true
+        additional_dependencies: ["safety", "uv"]
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.10.1
     hooks:
       - id: mypy
-        args: [--config-file=pyproject.toml]
+        args: [--config-file=my-app/pyproject.toml]
         additional_dependencies:
           - types-click
