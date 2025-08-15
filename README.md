@@ -98,63 +98,6 @@ Docker Compose Watchを使用してファイル変更を自動的に反映：
 docker compose up --watch
 ```
 
-## 開発
-
-### テストの実行
-
-```bash
-# すべてのテストを実行
-docker compose run --rm app pytest
-
-# 詳細出力でテストを実行
-docker compose run --rm app pytest -v
-
-# 特定のテストファイルのみ実行
-docker compose run --rm app pytest tests/test_cli.py
-```
-
-### コード品質チェック
-
-```bash
-# リンティング（自動修正付き）
-docker compose run --rm app ruff check . --fix
-
-# フォーマットチェック
-docker compose run --rm app ruff format --check .
-
-# フォーマット適用
-docker compose run --rm app ruff format .
-```
-
-### 依存関係の管理
-
-```bash
-# 新しいパッケージの追加
-docker compose run --rm app uv add <パッケージ名>
-
-# 開発用パッケージの追加
-docker compose run --rm app uv add <パッケージ名> --group dev
-
-# 依存関係の更新
-docker compose run --rm app uv lock
-```
-
-## CI/CD
-
-このプロジェクトは GitHub Actions を使用した自動化されたCI/CDパイプラインを提供します。
-
-### 自動実行されるチェック
-
-- **プルリクエスト作成時**と**mainブランチへのプッシュ時**に自動実行
-- ✅ **リンティング**: `ruff check`によるコード品質チェック
-- ✅ **フォーマット**: `ruff format --check`によるコードスタイルチェック
-- ✅ **テスト**: `pytest`による単体テスト・統合テスト
-- ✅ **ビルド**: Dockerイメージのビルド確認
-
-### ワークフロー設定
-
-CI設定は `.github/workflows/ci.yml` で管理されています。
-
 ## 本番デプロイ
 
 ### Dockerイメージのビルド
@@ -172,16 +115,9 @@ docker run --rm my-app:latest my-app hello "Production"
 
 ## 貢献
 
-プロジェクトへの貢献を歓迎します！詳細な開発ガイドラインについては、[`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) を参照してください。
+プロジェクトへの貢献を歓迎します！
 
-### 開発ワークフロー
-
-1. Issue の作成
-2. フィーチャーブランチの作成
-3. 開発・テスト
-4. プルリクエストの作成
-5. コードレビュー
-6. マージ
+開発環境のセットアップ、テストの実行方法、CI/CDパイプライン、開発ワークフローなどの詳細については、[`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) を参照してください。
 
 ## ライセンス
 
@@ -189,22 +125,8 @@ docker run --rm my-app:latest my-app hello "Production"
 
 ## 技術的な詳細
 
-### なぜ uv を使用するのか？
+### 採用技術の特徴
 
-- **高速**: Rustで実装され、pipの10-100倍高速
-- **信頼性**: 厳密な依存関係解決
-- **互換性**: pip互換のAPIを提供
-- **モダン**: 最新のPythonエコシステムに対応
-
-### Docker最適化
-
-- **マルチステージビルド**: 依存関係のインストールと最終イメージを分離
-- **レイヤーキャッシュ**: 効率的な再ビルド
-- **最小限のイメージサイズ**: 不要なファイルを除外
-
-### 品質保証
-
-- **型ヒント**: 型安全性の向上
-- **自動テスト**: 包括的なテストカバレッジ
-- **静的解析**: ruffによる高速なリンティング
-- **継続的インテグレーション**: 自動化された品質チェック
+- **uv**: Rustで実装された高速なPythonパッケージマネージャー（pipの10-100倍高速）
+- **Docker最適化**: マルチステージビルドとレイヤーキャッシュによる効率的なイメージ構築
+- **品質保証**: 自動テスト、静的解析、継続的インテグレーションによる高品質なコード
