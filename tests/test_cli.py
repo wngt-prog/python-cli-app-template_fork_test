@@ -4,8 +4,9 @@ CLIアプリケーションのテスト
 
 import importlib.metadata
 
-from my_app.cli import app
 from typer.testing import CliRunner
+
+from my_app.cli import app
 
 runner = CliRunner()
 __version__ = importlib.metadata.version("my-app")
