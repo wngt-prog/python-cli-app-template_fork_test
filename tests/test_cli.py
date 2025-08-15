@@ -2,10 +2,13 @@
 CLIアプリケーションのテスト
 """
 
+import importlib.metadata
+
 from my_app.cli import app
 from typer.testing import CliRunner
 
 runner = CliRunner()
+__version__ = importlib.metadata.version("my-app")
 
 
 def test_hello_command():
@@ -43,3 +46,24 @@ def test_hello_without_argument():
     assert result.exit_code != 0
     # Typerのエラーメッセージは通常stderrに出力される
     assert "Missing argument" in result.stderr or result.exit_code == 2
+
+
+def test_version_subcommand():
+    """versionサブコマンドが正しく動作することをテスト"""
+    result = runner.invoke(app, ["version"])
+    assert result.exit_code == 0
+    assert f"my-app version: {__version__}" in result.stdout
+
+
+def test_version_option():
+    """--versionオプションが正しく動作することをテスト"""
+    result = runner.invoke(app, ["--version"])
+    assert result.exit_code == 0
+    assert f"my-app version: {__version__}" in result.stdout
+
+
+def test_version_option_short():
+    """-vオプションが正しく動作することをテスト"""
+    result = runner.invoke(app, ["-v"])
+    assert result.exit_code == 0
+    assert f"my-app version: {__version__}" in result.stdout
