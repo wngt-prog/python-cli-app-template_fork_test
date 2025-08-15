@@ -39,7 +39,6 @@ jobs:
 
       - name: Docker Composeでテスト実行
         run: |
-          cd my-app
           docker compose run --rm app pytest -v
 
   # --- ジョブ3: Dockerイメージビルド確認 ---
@@ -51,5 +50,4 @@ jobs:
 
       - name: Dockerイメージビルド確認
         run: |
-          cd my-app
           docker compose build

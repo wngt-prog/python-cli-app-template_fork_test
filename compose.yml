@@ -1,7 +1,7 @@
 services:
   app:
-    # Build the image from the Dockerfile in the current directory
-    build: .
+    build:
+      context: .
 
     # Interactive mode for CLI application
     stdin_open: true
