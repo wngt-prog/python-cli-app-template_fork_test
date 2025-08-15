@@ -13,8 +13,15 @@ dev = ["pre-commit", "ruff", "pytest"]
 package = true
 
 [tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q"
 testpaths = ["tests"]
-addopts = "-v --tb=short"
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+
+[tool.mypy]
+exclude = "uv-docker-example-main"
 
 [tool.ruff]
 line-length = 88

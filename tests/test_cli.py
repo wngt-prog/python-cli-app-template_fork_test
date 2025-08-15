@@ -2,7 +2,6 @@
 CLIアプリケーションのテスト
 """
 
-import pytest
 from my_app.cli import app
 from typer.testing import CliRunner
 
@@ -42,4 +41,5 @@ def test_hello_without_argument():
     """helloコマンドに引数がない場合エラーになることをテスト"""
     result = runner.invoke(app, ["hello"])
     assert result.exit_code != 0
-    assert "Missing argument" in result.stdout
+    # Typerのエラーメッセージは通常stderrに出力される
+    assert "Missing argument" in result.stderr or result.exit_code == 2

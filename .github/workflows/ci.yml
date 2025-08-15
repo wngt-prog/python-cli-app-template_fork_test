@@ -7,29 +7,47 @@ on:
     branches: [ main ]
 
 jobs:
-  lint-and-test:
+  # --- ジョブ1: 静的解析とリンティング ---
+  linting:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: リポジトリをチェックアウト
-      uses: actions/checkout@v4
-      
-    - name: Docker Composeでリンティング実行
-      run: |
-        cd my-app
-        docker compose run --rm app ruff check .
-        
-    - name: Docker Composeでフォーマット確認
-      run: |
-        cd my-app
-        docker compose run --rm app ruff format --check .
-        
-    - name: Docker Composeでテスト実行
-      run: |
-        cd my-app
-        docker compose run --rm app pytest -v
-        
-    - name: Dockerイメージビルド確認
-      run: |
-        cd my-app
-        docker compose build
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Pythonのセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: pre-commitのキャッシュ設定
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pre-commit
+          key: pre-commit|${{ hashFiles('.pre-commit-config.yaml') }}
+
+      - name: pre-commitのインストールと実行
+        run: |
+          pip install pre-commit
+          pre-commit run --all-files
+
+  # --- ジョブ2: テスト実行 ---
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Docker Composeでテスト実行
+        run: |
+          docker compose run --rm app pytest -v
+
+  # --- ジョブ3: Dockerイメージビルド確認 ---
+  docker-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Dockerイメージビルド確認
+        run: |
+          docker compose build

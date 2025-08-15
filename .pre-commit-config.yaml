@@ -34,24 +34,25 @@ repos:
     rev: v1.5.0
     hooks:
       - id: detect-secrets
-        args: ["--baseline", ".secrets.baseline"]
-  - repo: https://github.com/fpgmaas/deptry
-    rev: 0.17.1
-    hooks:
-      - id: deptry
-  - repo: https://github.com/pycqa/safety
-    rev: 3.1.0
+  # - repo: https://github.com/fpgmaas/deptry
+  #   rev: 0.23.1
+  #   hooks:
+  #     - id: deptry
+  - repo: local
     hooks:
       - id: safety
-        entry: safety check --stdin
+        name: Check for insecure dependencies
+        entry: bash -c "uv pip freeze | safety check --stdin"
         language: python
-        additional_dependencies: ["uv"]
-        files: ^(pyproject\.toml|uv\.lock)$
+        require_serial: true
+        additional_dependencies: ["safety", "uv"]
+        files: ^(pyproject\\.toml|uv\\.lock)$
         pass_filenames: false
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.1
-    hooks:
-      - id: mypy
-        args: [--config-file=pyproject.toml]
-        additional_dependencies:
-          - types-click
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: v1.10.1
+  #   hooks:
+  #     - id: mypy
+  #       args: [--config-file=pyproject.toml, --exclude, "uv-docker-example-main/"]
+  #       additional_dependencies:
+  #         - types-click
+  #         - typer

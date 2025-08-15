@@ -33,7 +33,7 @@ my-app/
 
 ### 1. CLIモジュール (`src/my_app/cli.py`)
 
-**責任**: 
+**責任**:
 - Typerを使用したコマンドライン引数の解析
 - helloコマンドの実装
 - ヘルプテキストの自動生成
@@ -47,7 +47,7 @@ app = typer.Typer()
 @app.command()
 def hello(name: str) -> None:
     """指定された名前で挨拶を表示する"""
-    
+
 @app.callback()
 def main() -> None:
     """my-app CLI アプリケーション"""
