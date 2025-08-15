@@ -1,4 +1,5 @@
 repos:
+  # --- ステージ1: 基本的なファイル衛生チェック ---
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.6.0
     hooks:
@@ -6,9 +7,51 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+
+  # --- ステージ2 & 3: 自動修正、フォーマット、リンティング ---
+  # pyupgradeを先に実行
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.16.0
+    hooks:
+      - id: pyupgrade
+        args: [--py312-plus]
+  # 次にruff-format, そしてruff --fix
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.5.0
     hooks:
+      - id: ruff-format
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
-      - id: ruff-format
+
+  # --- ステージ4: 静的解析と重量級チェック ---
+  - repo: https://github.com/PyCQA/bandit
+    rev: 1.7.9
+    hooks:
+      - id: bandit
+        args: ["-c", "pyproject.toml"]
+        additional_dependencies: ["bandit[toml]"]
+  - repo: https://github.com/Yelp/detect-secrets
+    rev: v1.5.0
+    hooks:
+      - id: detect-secrets
+        args: ["--baseline", ".secrets.baseline"]
+  - repo: https://github.com/fpgmaas/deptry
+    rev: 0.17.1
+    hooks:
+      - id: deptry
+  - repo: https://github.com/pycqa/safety
+    rev: 3.1.0
+    hooks:
+      - id: safety
+        entry: safety check --stdin
+        language: python
+        additional_dependencies: ["uv"]
+        files: ^(pyproject\.toml|uv\.lock)$
+        pass_filenames: false
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.10.1
+    hooks:
+      - id: mypy
+        args: [--config-file=pyproject.toml]
+        additional_dependencies:
+          - types-click
