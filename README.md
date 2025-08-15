@@ -26,54 +26,48 @@
 
 ```
 python-docker-cli-app-template/
-├── my-app/                     # メインアプリケーション
-│   ├── src/my_app/            # Pythonソースコード
-│   │   ├── __init__.py
-│   │   └── cli.py             # CLIエントリーポイント
-│   ├── tests/                 # テストコード
-│   │   ├── __init__.py
-│   │   └── test_cli.py
-│   ├── Dockerfile             # 本番用Dockerイメージ
-│   ├── compose.yml            # Docker Compose設定
-│   ├── pyproject.toml         # プロジェクト設定・依存関係
-│   └── uv.lock               # ロックファイル
-├── docs/                      # ドキュメント
-│   └── CONTRIBUTING.md        # 開発ガイド
-├── .github/workflows/         # CI/CD設定
-│   └── ci.yml                # GitHub Actions
-└── README.md                  # このファイル
+├── src/                      # Pythonソースコード
+│   └── my_app/
+│       ├── __init__.py
+│       └── cli.py            # CLIエントリーポイント
+├── tests/                    # テストコード
+│   └── test_cli.py
+├── .github/workflows/        # CI/CD設定 (GitHub Actions)
+├── docs/                     # ドキュメント
+├── .pre-commit-config.yaml   # pre-commitフック設定
+├── Dockerfile                # 本番・開発兼用Dockerイメージ
+├── compose.yml               # Docker Compose設定
+├── pyproject.toml            # プロジェクト設定・依存関係
+├── uv.lock                   # 依存関係ロックファイル
+└── README.md                 # このファイル
 ```
 
 ## クイックスタート
+
+詳細な手順は [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) を参照してください。
 
 ### 前提条件
 
 - Docker & Docker Compose
 - Git
-- （オプション）pre-commit
+- （推奨）pre-commit
 
 ### セットアップ
 
 1. **リポジトリのクローン**
    ```bash
    git clone https://github.com/gnkm/python-docker-cli-app-template.git
-   cd python-docker-cli-app-template/my-app
+   cd python-docker-cli-app-template
    ```
 
-2. **Dockerイメージのビルド**
+2. **Dockerイメージのビルドと依存関係の同期**
    ```bash
    docker compose build
-   ```
-
-3. **依存関係の同期**
-   ```bash
    docker compose run --rm app uv sync
    ```
 
-4. **Git フックのセットアップ**（推奨）
+3. **Gitフックのセットアップ** (推奨)
    ```bash
-   # プロジェクトルートで実行
-   cd ..
    pre-commit install
    ```
 
@@ -87,15 +81,14 @@ docker compose run --rm app my-app --help
 
 # hello コマンドの実行
 docker compose run --rm app my-app hello "World"
-docker compose run --rm app my-app hello "太郎"
 ```
 
-#### 開発モード
+#### 開発モード (`watch`モード)
 
-Docker Compose Watchを使用してファイル変更を自動的に反映：
+ソースコードの変更をコンテナに即時反映させるには、`watch`モードを使用します。
 
 ```bash
-docker compose up --watch
+docker compose watch
 ```
 
 ## 本番デプロイ
@@ -103,7 +96,6 @@ docker compose up --watch
 ### Dockerイメージのビルド
 
 ```bash
-cd my-app
 docker build -t my-app:latest .
 ```
 
@@ -118,10 +110,6 @@ docker run --rm my-app:latest my-app hello "Production"
 プロジェクトへの貢献を歓迎します！
 
 開発環境のセットアップ、テストの実行方法、CI/CDパイプライン、開発ワークフローなどの詳細については、[`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) を参照してください。
-
-## ライセンス
-
-このプロジェクトは [MIT License](LICENSE) の下で公開されています。
 
 ## 技術的な詳細
 

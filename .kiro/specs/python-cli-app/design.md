@@ -9,11 +9,15 @@
 ### 全体構成
 
 ```
-my-app/
+.
 ├── src/
 │   └── my_app/
 │       ├── __init__.py
 │       └── cli.py
+├── tests/
+│   ├── __init__.py
+│   └── test_cli.py
+├── .pre-commit-config.yaml
 ├── pyproject.toml
 ├── uv.lock
 ├── Dockerfile
